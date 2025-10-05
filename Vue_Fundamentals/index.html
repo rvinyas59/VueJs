@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>Lucky Number: {{getMessage()}}</p>
+      <p>Lucky Number: {{luckyNum}}</p>
+      <p>Lucky number is {{luckyNum % 2 == 0 ? "even":"odd"}}</p>
+      <p>{{updateLuckyNum()}}</p>
+      <p>Lucky Numbers: {{luckyNums}}</p>
+      <p>{{employee.name}} is {{employee.age}} years old</p>
+      <p>{{employee.salary}}</p>
+      <p>{{employee1.salary}}</p>
+    </div>
+  </body>
+
+  <script>
+    const { createApp, ref, reactive } = Vue;
+
+    createApp({
+      setup() {
+        const msg = "Hello Vue";
+        let luckyNum = ref(0);
+        const luckyNums = [1, 4, 5, 110];
+
+        // reactive for objects
+        const employee = reactive({
+          name: "Jhon",
+          age: 30,
+          salary: 5000,
+        });
+
+        // ref is used for primitive data types
+        const employee1 = ref({
+          name: "Jhon",
+          age: 30,
+          salary: 5000,
+        });
+
+        function updateLuckyNum() {
+          setTimeout(() => {
+            luckyNum.value = 77;
+            // updating ref and reactive is different
+            employee.salary = 60000;
+            employee1.value.salary = 8000;
+          }, 2000);
+        }
+
+        function getMessage() {
+          return msg.toUpperCase();
+        }
+
+        return {
+          getMessage,
+          luckyNum,
+          luckyNums,
+          employee,
+          employee1,
+          updateLuckyNum,
+        };
+      },
+    }).mount("#app");
+  </script>
+</html>
